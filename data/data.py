@@ -149,7 +149,7 @@ def own():
 			iid = iids[i]
 			t=random.randint(start,end)
 			date_touple=time.localtime(t)
-			tm = time.strftime("%M:%S", date_touple)
+			tm = time.strftime("00:%M:%S", date_touple)
 			out.append(str(iid)+","+str(hid)+","+tm+","+str(mid)+"\n")
 
 	file.writelines(out)
@@ -198,4 +198,4 @@ def participate():
 
 
 
-belongto()
+own()
