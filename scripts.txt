@@ -73,7 +73,7 @@ create table Belong_To (
 	gpm int,
 	assist int,
 	xpm int,
-	primary key(mid, hid),
+	primary key(mid, radiant, hid),
 	foreign key (mid, radiant) references Team_Compose,
 	check (level > 0 and level < 26)
 );
