@@ -169,7 +169,7 @@ def belongto():
 		gpm = random.randint(150, 1200)
 		assist = random.randint(0, 50)
 		xpm = random.randint(150, 1200)
-		out.append(str(mid)+","+str(hid)+","+str(radiant)+","+str(lasthit)+","+str(lasthit)+","+str(death)+","+str(kill)+","+str(level)+","+str(denies)+","+str(gpm)+","+str(assist)+","+str(xpm)+"\n")
+		out.append(str(mid)+","+str(radiant)+","+str(hid)+","+str(lasthit)+","+str(death)+","+str(kill)+","+str(level)+","+str(denies)+","+str(gpm)+","+str(assist)+","+str(xpm)+"\n")
 
 		if cnt%5 == 0:
 			radiant = 1-radiant
@@ -192,4 +192,4 @@ def participate():
 
 
 
-proteam()
+belongto()
