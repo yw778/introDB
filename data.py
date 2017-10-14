@@ -59,7 +59,8 @@ def matchhost():
 		t=random.randint(start,end)
 		date_touple=time.localtime(t)
 		date=time.strftime("%Y-%m-%d",date_touple)
-		out.append(str(i)+","+str(j)+","+date+","+str(7)+"\n")
+		tm = time.strftime("%H:%M:%S", date_touple)
+		out.append(str(i)+","+str(j)+","+date+","+tm+"\n")
 
 	file.writelines(out)
 	file.flush()
@@ -137,6 +138,8 @@ def own():
 	read = open('pick.txt', 'r')
 	out = []
 	iids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	start=time.mktime(a1)
+	end=time.mktime(a2)
 	for line in read:
 		l = line.split(",")
 		mid = int(l[2])
@@ -144,7 +147,10 @@ def own():
 		random.shuffle(iids)
 		for i in xrange(3):
 			iid = iids[i]
-			out.append(str(iid)+","+str(hid)+","+str(mid)+"\n")
+			t=random.randint(start,end)
+			date_touple=time.localtime(t)
+			tm = time.strftime("%M:%S", date_touple)
+			out.append(str(iid)+","+str(hid)+","+tm+","+str(mid)+"\n")
 
 	file.writelines(out)
 	file.flush()
@@ -192,4 +198,4 @@ def participate():
 
 
 
-belongto()
+own()
