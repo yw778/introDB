@@ -1,0 +1,20 @@
+1,Health
+2,Attack Speed
+3,Health
+4,XP Gain
+5,Health
+6,Mana
+7,Damage
+8,Health
+9,XP Gain
+10,Health
+11,Damage
+12,Health
+13,Health
+14,Damage
+15,Mana
+16,XP Gain
+17,Damage
+18,Mana
+19,Mana
+20,Damage
