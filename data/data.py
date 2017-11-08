@@ -195,7 +195,4 @@ def participate():
 	file.flush()
 	file.close()
 
-
-
-
 own()

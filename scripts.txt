@@ -41,7 +41,10 @@ create table Play_In (
 create table Pick (
 	pid int references Player_Consist_Of (pid),
 	hid int references Hero (hid),
-	primary key (pid, hid)
+	mid int not null,
+	primary key (pid, mid),
+	unique (mid, hid),
+	foreign key (mid) references Match_Host
 );
 
 create table Player_Consist_Of (
@@ -55,10 +58,12 @@ create table Player_Consist_Of (
 );
 
 create table Own (
-	iid int references Item,
+	iid int not null,
 	hid int references Hero,
 	bought_time time,
-	primary key (iid, hid)
+	mid int references Match_Host,
+	primary key (mid, hid, iid),
+	foreign key (iid) references Item
 );
 
 create table Belong_To (
