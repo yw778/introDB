@@ -1,0 +1,32 @@
+.nav ul{
+width:1560px;
+margin:0px auto;
+border:1px solid #000;
+background:#0C426F;
+height:50px;
+list-style-type:none;
+}
+
+.list ul{
+list-style-type:none;
+}
+
+.nav ul li{
+float:left;
+}
+
+.nav ul li a{
+height:50px;
+line-height:50px;
+background:#0C426F;
+color:white;
+margin:0px 55px;
+font-size:18px;
+display:block;
+text-align:center;
+text-decoration:none;
+}
+
+.nav ul li a:hover{
+background:#0066FF;
+}
