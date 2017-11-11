@@ -1,0 +1,160 @@
+<!DOCTYPE html>  
+<head>
+	<meta charset="gb2312">
+	<title>Dota2TiGo</title>
+	<script type="text/javascript" src="d3/d3.js"></script>
+	<script type="text/javascript" src="d3/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="d3/myfunc/pie.js"></script>
+	<script type="text/javascript" src="d3/myfunc/bar.js"></script>	
+	<script src="d3/myfunc/d3.tip.v0.6.3.js"></script>
+	<link rel="stylesheet" href="d3/myfunc/bar.css">
+	<link rel="stylesheet" href="d3/myfunc/nav.css">
+	<link rel="stylesheet" href="d3/myfunc/bottom.css">
+	<link rel="stylesheet" href="d3/myfunc/txt.css">
+	<link rel="stylesheet" href="d3/myfunc/bodyStyle.css">
+</head>
+
+<body class="bodyStyle">	
+	<div>	
+		<div align="center">
+			<img align ="center" src="d3/img/title2.png" width="1600px" height="180px"/>
+		</div>
+	</div>
+
+	<div>
+		<div class="nav" align="center">
+			<ul>
+			<li><a href="league.html">League</a></li>
+			<li><a href="team.html">Team</a></li>
+			<li><a href="match.html">Match</a></li>
+			<li><a href="hero.html">Hero</a></li>
+			<li><a href="item.html">Item</a></li>
+			<li><a href="player.html">Player</a></li>
+			<li><a href="summary.html">Summary</a></li>
+			<li><a href="inference.html">Inference</a></li>
+			</ul>
+			<!-- <br>
+			<br> -->
+		</div>
+	</div>
+
+	<div class="title"><h1 align="center">Match Page of Dota TI game</h1></div>
+
+    
+	<div class="title",>
+		<h2 align="center">
+		<form action="<%=basePath%>tableShow/updateOnu.do" onsubmit="return verify();" method="post"  id="form">
+			Search Match Number: <input type="text" name="onu_id" value="1"/><br/>
+			<input type="submit" value="Go For Match"/>
+		</form>
+		</h2>
+	</div>
+
+	<div class="title"><h2 align="center">Match id : 1234</h2></div>
+
+	<div align="center">
+		<h2 align="left"> Radient : team1 
+	   	<table id="generatedTable" style ="border=2">  
+            <thead>  
+                <tr align="center">  
+                    <th style='width:5%;'>hero</th>  
+                    <th style='width:5%;'>item</th>  
+                    <th style='width:5%;'>kill</th>
+                    <th style='width:5%;'>assist</th>  
+                    <th style='width:5%;'>death</th> 
+                    <th style='width:5%;'>gpm</th> 
+                    <th style='width:5%;'>xpm</th> 
+                    <th style='width:5%;'>last hit</th> 
+                <!--     <th style='width:10%;'>第四列</th>                               
+                    <th style='width:3%;'>第五列</th>      -->                       
+                </tr align="center">  
+            </thead>  
+            <tbody>  
+                <tr id="cloneTr">  
+                   <td align="center">earch spirit</td>  
+                   <td align="center">shu zhi</td>  
+                   <td align="center">2</td> 
+                   <td align="center">2</td>  
+                   <td align="center">2</td>
+                   <td align="center">892</td> 
+                   <td align="center">432</td>  
+                   <td align="center">789</td> 
+                 <!--   <td></td>  
+                  <td></td>    -->        
+                 </tr>  
+             </tbody>  
+ 		</table>  
+	</div> 
+
+
+	<div align="center">
+		<h2 align="left"> Dire : team2
+	   	<table id="generatedTable" style ="border=2">  
+            <thead>  
+                <tr align="center">  
+                    <th style='width:5%;'>hero</th>  
+                    <th style='width:5%;'>item</th>  
+                    <th style='width:5%;'>kill</th>
+                    <th style='width:5%;'>assist</th>  
+                    <th style='width:5%;'>death</th> 
+                    <th style='width:5%;'>gpm</th> 
+                    <th style='width:5%;'>xpm</th> 
+                    <th style='width:5%;'>last hit</th> 
+                <!--     <th style='width:10%;'>第四列</th>                               
+                    <th style='width:3%;'>第五列</th>      -->                       
+                </tr align="center">  
+            </thead>  
+            <tbody>  
+                <tr id="cloneTr">  
+                   <td align="center">earch spirit</td>  
+                   <td align="center">shu zhi</td>  
+                   <td align="center">2</td> 
+                   <td align="center">2</td>  
+                   <td align="center">2</td>
+                   <td align="center">892</td> 
+                   <td align="center">432</td>  
+                   <td align="center">789</td> 
+                 <!--   <td></td>  
+                  <td></td>    -->        
+                 </tr>  
+             </tbody>  
+ 		</table>  
+	</div> 
+
+
+	<div style="clear:both">
+		</br>
+		</br>
+		</br>
+		</br>
+		</br>
+		</br>
+	</div>
+	
+	<div class="bottom">
+		<ul>
+		<li><a>Copy Right&copy;Han Xu, Yu Wang&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+		<li><a>Columbia University in the City of New York</a></li>
+		</ul>
+	</div>
+
+	 <script>
+	     function verify(){
+	        //get element
+	        var form=document.getElementById('form');
+	        var inputArray=form.getElementsByTagName("input");
+	        var inputArrayLength=inputArray.length;
+	        //循环input元素数组
+	        for(var int=0;int<inputArrayLength;int++){
+	            //判断每个input元素的值是否为空
+	            if( inputArray[int].value==null || inputArray[int].value=='' 
+	            		|| inputArray[int].value < 1 || inputArray[int].value > 7){
+	                alert('Pleas Input number from 1 to 7');
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	 </script>
+
+</body>
