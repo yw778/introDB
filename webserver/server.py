@@ -17,7 +17,7 @@ Read about it online.
 import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
-from flask import Flask, request, render_template, g, redirect, Response
+from flask import Flask, request, render_template, g, redirect, Response, url_for
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -46,11 +46,11 @@ engine = create_engine(DATABASEURI)
 # Example of running queries in your database
 # Note that this will probably not work if you already have a table named 'test' in your database, containing meaningful data. This is only an example showing you how to run queries in your database using SQLAlchemy.
 #
-engine.execute("""CREATE TABLE IF NOT EXISTS test (
-  id serial,
-  name text
-);""")
-engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
+# engine.execute("""CREATE TABLE IF NOT EXISTS test (
+#   id serial,
+#   name text
+# );""")
+# engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
 
 
 @app.before_request
@@ -113,10 +113,12 @@ def index():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT name FROM test")
+  cursor = g.conn.execute("SELECT * FROM hero")
   names = []
+  ability = []
   for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
+    names.append(result['hid'])  # can also be accessed using result[0]
+    ability.append(result['ability'])
   cursor.close()
 
   #
@@ -145,7 +147,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  context = dict(data = zip(names, ability))
 
 
   #
@@ -165,6 +167,19 @@ def index():
 @app.route('/another')
 def another():
   return render_template("another.html")
+
+@app.route('/hero', methods=['POST', 'GET'])
+def hero():
+  print request.args
+  cursor = g.conn.execute("SELECT * FROM hero")
+  names = []
+  ability = []
+  for result in cursor:
+    names.append(result['hid'])  # can also be accessed using result[0]
+    ability.append(result['ability'])
+  cursor.close()
+  context = dict(data = zip(names, ability))
+  return render_template("hero.html", **context)
 
 
 # Example of adding new data to the database

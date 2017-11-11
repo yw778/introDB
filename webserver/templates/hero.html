@@ -2,39 +2,37 @@
 <head>
 	<meta charset="gb2312">
 	<title>Dota2TiGo</title>
-	<script type="text/javascript" src="d3/d3.js"></script>
-	<script type="text/javascript" src="d3/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="d3/myfunc/pie.js"></script>
-	<script type="text/javascript" src="d3/myfunc/bar.js"></script>	
-	<script src="d3/myfunc/d3.tip.v0.6.3.js"></script>
-	<link rel="stylesheet" href="d3/myfunc/bar.css">
-	<link rel="stylesheet" href="d3/myfunc/nav.css">
-	<link rel="stylesheet" href="d3/myfunc/bottom.css">
-	<link rel="stylesheet" href="d3/myfunc/txt.css">
-	<link rel="stylesheet" href="d3/myfunc/bodyStyle.css">
+	<script type="text/javascript" src="{{ url_for('static', filename='d3.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery-2.1.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='myfunc/pie.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='myfunc/bar.js') }}"></script>	
+	<script src="{{ url_for('static', filename='myfunc/d3.tip.v0.6.3.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bar.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/nav.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bottom.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/txt.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bodyStyle.css') }}">
 </head>
 
 <body class="bodyStyle">	
 	<div>	
 		<div align="center">
-			<img align ="center" src="d3/img/title2.png" width="1600px" height="180px"/>
+			<img align ="center" src="{{ url_for('static', filename='img/title2.png') }}" width="1600px" height="180px"/>
 		</div>
 	</div>
 
 	<div>
 		<div class="nav" align="center">
 			<ul>
-			<li><a href="league.html">League</a></li>
-			<li><a href="team.html">Team</a></li>
-			<li><a href="match.html">Match</a></li>
-			<li><a href="hero.html">Hero</a></li>
-			<li><a href="item.html">Item</a></li>
-			<li><a href="player.html">Player</a></li>
-			<li><a href="summary.html">Summary</a></li>
-			<li><a href="inference.html">Inference</a></li>
+			<li><a href="league">League</a></li>
+			<li><a href="team">Team</a></li>
+			<li><a href="match">Match</a></li>
+			<li><a href="hero">Hero</a></li>
+			<li><a href="item">Item</a></li>
+			<li><a href="player">Player</a></li>
+			<li><a href="summary">Summary</a></li>
+			<li><a href="inference">Inference</a></li>
 			</ul>
-			<!-- <br>
-			<br> -->
 		</div>
 	</div>
 
@@ -50,25 +48,23 @@
 	</div>
 
 	<div align="center">   
-	   	<table id="generatedTable" style ="border=2">  
+      <table id="generatedTable" style ="border=2">  
             <thead>  
                 <tr align="center">  
                     <th style='width:20%;'>Hero Id</th>  
-                    <th style='width:20%;'>Ability</th>  
-                <!--     <th style='width:10%;'>第四列</th>                               
-                    <th style='width:3%;'>第五列</th>      -->                       
+                    <th style='width:20%;'>Ability</th>                
                 </tr align="center">  
             </thead>  
-            <tbody>  
+            <tbody>
+                {% for n in data %}
                 <tr id="cloneTr">  
-                   <td align="center">1</td>  
-                   <td align="center">level up</td>  
-                 <!--   <td></td>  
-                  <td></td>    -->        
-                 </tr>  
+                   <td align="center">{{n[0]}}</td>  
+                   <td align="center">{{n[1]}}</td>
+                </tr>  
+                {% endfor %}
              </tbody>  
- 		</table>  
-	</div> 
+      </table>  
+  	</div>  
 
 
 
@@ -81,11 +77,13 @@
 		</br>
 	</div>
 	
-	<div class="bottom">
+	<div align="center">
+	<div class="bottom" align="center">
 		<ul>
 		<li><a>Copy Right&copy;Han Xu, Yu Wang&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 		<li><a>Columbia University in the City of New York</a></li>
 		</ul>
+	</div>
 	</div>
 
 	 <script>
