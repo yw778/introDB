@@ -2,39 +2,47 @@
 <head>
 	<meta charset="gb2312">
 	<title>Dota2TiGo</title>
-	<script type="text/javascript" src="d3/d3.js"></script>
-	<script type="text/javascript" src="d3/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="d3/myfunc/pie.js"></script>
-	<script type="text/javascript" src="d3/myfunc/bar.js"></script>	
-	<script src="d3/myfunc/d3.tip.v0.6.3.js"></script>
-	<link rel="stylesheet" href="d3/myfunc/bar.css">
-	<link rel="stylesheet" href="d3/myfunc/nav.css">
-	<link rel="stylesheet" href="d3/myfunc/bottom.css">
-	<link rel="stylesheet" href="d3/myfunc/txt.css">
-	<link rel="stylesheet" href="d3/myfunc/bodyStyle.css">
+	<script type="text/javascript" src="{{ url_for('static', filename='d3.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery-2.1.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='myfunc/pie.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='myfunc/bar.js') }}"></script>	
+	<script src="{{ url_for('static', filename='myfunc/d3.tip.v0.6.3.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bar.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/nav.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bottom.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/txt.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bodyStyle.css') }}">
 </head>
 
 <body class="bodyStyle">	
 	<div>	
 		<div align="center">
-			<img align ="center" src="d3/img/title2.png" width="1600px" height="180px"/>
+			<img align ="center" src="{{ url_for('static', filename='img/title2.png') }}" width="100%" height="180px"/>
 		</div>
 	</div>
 
 	<div>
 		<div class="nav" align="center">
 			<ul>
-			<li><a href="league.html">League</a></li>
-			<li><a href="team.html">Team</a></li>
-			<li><a href="match.html">Match</a></li>
-			<li><a href="hero.html">Hero</a></li>
-			<li><a href="item.html">Item</a></li>
-			<li><a href="player.html">Player</a></li>
-			<li><a href="summary.html">Summary</a></li>
-			<li><a href="inference.html">Inference</a></li>
+			<li><a href="../league">League</a></li>
+			<li>
+			<form id="_form" method="POST" action="/team">
+			  <input type="hidden" name="ptid" value="1"/> 
+			</form>
+			<a onclick="document.getElementById('_form').submit();" href="#">Team</a>
+			</li>
+			<li>
+			<form id="_form_" method="POST" action="/match">
+			  <input type="hidden" name="mid" value="1"/> 
+			</form>
+			<a onclick="document.getElementById('_form_').submit();" href="#">Match</a>
+			</li>
+			<li><a href="../hero">Hero</a></li>
+			<li><a href="../item">Item</a></li>
+			<li><a href="../player">Player</a></li>
+			<li><a href="../summary">Summary</a></li>
+			<li><a href="../inference">Inference</a></li>
 			</ul>
-			<!-- <br>
-			<br> -->
 		</div>
 	</div>
 
@@ -43,14 +51,14 @@
     
 	<div class="title",>
 		<h2 align="center">
-		<form action="<%=basePath%>tableShow/updateOnu.do" onsubmit="return verify();" method="post"  id="form">
-			Search Match Number: <input type="text" name="onu_id" value="1"/><br/>
-			<input type="submit" value="Go For Match"/>
+		<form action="/match" onsubmit="return verify();" method="POST"  id="form">
+			Search Match Number: <input type="text" name="mid" value="1"/><br/>
+			<input type="submit" value="Search"/>
 		</form>
 		</h2>
 	</div>
 
-	<div class="title"><h2 align="center">Match id : 1234</h2></div>
+	<div class="title"><h2 align="center">Match id : {{mid}}</h2></div>
 
 	<div align="center">
 		<h2 align="left"> Radient : team1 
@@ -65,23 +73,23 @@
                     <th style='width:5%;'>gpm</th> 
                     <th style='width:5%;'>xpm</th> 
                     <th style='width:5%;'>last hit</th> 
-                <!--     <th style='width:10%;'>第四列</th>                               
-                    <th style='width:3%;'>第五列</th>      -->                       
+                    <th style='width:5%;'>denies</th>                      
                 </tr align="center">  
             </thead>  
             <tbody>  
+                {% for n in team1 %}
                 <tr id="cloneTr">  
-                   <td align="center">earch spirit</td>  
-                   <td align="center">shu zhi</td>  
-                   <td align="center">2</td> 
-                   <td align="center">2</td>  
-                   <td align="center">2</td>
-                   <td align="center">892</td> 
-                   <td align="center">432</td>  
-                   <td align="center">789</td> 
-                 <!--   <td></td>  
-                  <td></td>    -->        
-                 </tr>  
+                   <td align="center">{{n[0]}}</td>  
+                   <td align="center">{{n[1]}}</td>  
+                   <td align="center">{{n[2]}}</td>  
+                   <td align="center">{{n[3]}}</td>  
+                   <td align="center">{{n[4]}}</td>  
+                   <td align="center">{{n[5]}}</td>  
+                   <td align="center">{{n[6]}}</td>  
+                   <td align="center">{{n[7]}}</td>
+                   <td align="center">{{n[8]}}</td>
+                </tr>  
+                {% endfor %}
              </tbody>  
  		</table>  
 	</div> 
@@ -100,23 +108,23 @@
                     <th style='width:5%;'>gpm</th> 
                     <th style='width:5%;'>xpm</th> 
                     <th style='width:5%;'>last hit</th> 
-                <!--     <th style='width:10%;'>第四列</th>                               
-                    <th style='width:3%;'>第五列</th>      -->                       
+                    <th style='width:5%;'>denies</th>                     
                 </tr align="center">  
             </thead>  
             <tbody>  
+                {% for n in team2 %}
                 <tr id="cloneTr">  
-                   <td align="center">earch spirit</td>  
-                   <td align="center">shu zhi</td>  
-                   <td align="center">2</td> 
-                   <td align="center">2</td>  
-                   <td align="center">2</td>
-                   <td align="center">892</td> 
-                   <td align="center">432</td>  
-                   <td align="center">789</td> 
-                 <!--   <td></td>  
-                  <td></td>    -->        
-                 </tr>  
+                   <td align="center">{{n[0]}}</td>  
+                   <td align="center">{{n[1]}}</td>  
+                   <td align="center">{{n[2]}}</td>  
+                   <td align="center">{{n[3]}}</td>  
+                   <td align="center">{{n[4]}}</td>  
+                   <td align="center">{{n[5]}}</td>  
+                   <td align="center">{{n[6]}}</td>  
+                   <td align="center">{{n[7]}}</td> 
+                   <td align="center">{{n[8]}}</td>
+                </tr>  
+                {% endfor %}
              </tbody>  
  		</table>  
 	</div> 

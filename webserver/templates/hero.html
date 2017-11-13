@@ -24,14 +24,24 @@
 	<div>
 		<div class="nav" align="center">
 			<ul>
-			<li><a href="league">League</a></li>
-			<li><a href="team">Team</a></li>
-			<li><a href="match">Match</a></li>
-			<li><a href="hero">Hero</a></li>
-			<li><a href="item">Item</a></li>
-			<li><a href="player">Player</a></li>
-			<li><a href="summary">Summary</a></li>
-			<li><a href="inference">Inference</a></li>
+			<li><a href="../league">League</a></li>
+			<li>
+			<form id="_form" method="POST" action="/team">
+			  <input type="hidden" name="ptid" value="1"/> 
+			</form>
+			<a onclick="document.getElementById('_form').submit();" href="#">Team</a>
+			</li>
+			<li>
+			<form id="_form_" method="POST" action="/match">
+			  <input type="hidden" name="mid" value="1"/> 
+			</form>
+			<a onclick="document.getElementById('_form_').submit();" href="#">Match</a>
+			</li>
+			<li><a href="../hero">Hero</a></li>
+			<li><a href="../item">Item</a></li>
+			<li><a href="../player">Player</a></li>
+			<li><a href="../summary">Summary</a></li>
+			<li><a href="../inference">Inference</a></li>
 			</ul>
 		</div>
 	</div>
@@ -40,9 +50,9 @@
 
 	<div class="title",>
 		<h2 align="center">
-		<form action="<%=basePath%>tableShow/updateOnu.do" onsubmit="return verify();" method="post"  id="form">
-			Hero Number: <input type="text" name="onu_id" value="1"/><br/>
-			<input type="submit" value="Go For Match"/>
+		<form action="/hero/search" onsubmit="return verify();" method="POST"  id="form">
+			Hero Number: <input type="text" name="heroid" value="1"/><br/>
+			<input type="submit" value="Search"/>
 		</form>
 		</h2>
 	</div>
@@ -94,8 +104,8 @@
 	        for(var int=0;int<inputArrayLength;int++){
 	            //判断每个input元素的值是否为空
 	            if( inputArray[int].value==null || inputArray[int].value=='' 
-	            		|| inputArray[int].value < 1 || inputArray[int].value > 7){
-	                alert('Pleas Input number from 1 to 7');
+	            		|| inputArray[int].value < 1 || inputArray[int].value > 20){
+	                alert('Pleas Input number from 1 to 20');
 	                return false;
 	            }
 	        }

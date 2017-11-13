@@ -2,39 +2,47 @@
 <head>
 	<meta charset="gb2312">
 	<title>Dota2TiGo</title>
-	<script type="text/javascript" src="d3/d3.js"></script>
-	<script type="text/javascript" src="d3/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="d3/myfunc/pie.js"></script>
-	<script type="text/javascript" src="d3/myfunc/bar.js"></script>	
-	<script src="d3/myfunc/d3.tip.v0.6.3.js"></script>
-	<link rel="stylesheet" href="d3/myfunc/bar.css">
-	<link rel="stylesheet" href="d3/myfunc/nav.css">
-	<link rel="stylesheet" href="d3/myfunc/bottom.css">
-	<link rel="stylesheet" href="d3/myfunc/txt.css">
-	<link rel="stylesheet" href="d3/myfunc/bodyStyle.css">
+	<script type="text/javascript" src="{{ url_for('static', filename='d3.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery-2.1.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='myfunc/pie.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='myfunc/bar.js') }}"></script>	
+	<script src="{{ url_for('static', filename='myfunc/d3.tip.v0.6.3.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bar.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/nav.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bottom.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/txt.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='myfunc/bodyStyle.css') }}">
 </head>
 
 <body class="bodyStyle">	
 	<div>	
 		<div align="center">
-			<img align ="center" src="d3/img/title2.png" width="1600px" height="180px"/>
+			<img align ="center" src="{{ url_for('static', filename='img/title2.png') }}" width="100%" height="180px"/>
 		</div>
 	</div>
 
 	<div>
 		<div class="nav" align="center">
 			<ul>
-			<li><a href="league.html">League</a></li>
-			<li><a href="team.html">Team</a></li>
-			<li><a href="match.html">Match</a></li>
-			<li><a href="hero.html">Hero</a></li>
-			<li><a href="item.html">Item</a></li>
-			<li><a href="player.html">Player</a></li>
-			<li><a href="summary.html">Summary</a></li>
-			<li><a href="inference.html">Inference</a></li>
+			<li><a href="../league">League</a></li>
+			<li>
+			<form id="_form" method="POST" action="/team">
+			  <input type="hidden" name="ptid" value="1"/> 
+			</form>
+			<a onclick="document.getElementById('_form').submit();" href="#">Team</a>
+			</li>
+			<li>
+			<form id="_form_" method="POST" action="/match">
+			  <input type="hidden" name="mid" value="1"/> 
+			</form>
+			<a onclick="document.getElementById('_form_').submit();" href="#">Match</a>
+			</li>
+			<li><a href="../hero">Hero</a></li>
+			<li><a href="../item">Item</a></li>
+			<li><a href="../player">Player</a></li>
+			<li><a href="../summary">Summary</a></li>
+			<li><a href="../inference">Inference</a></li>
 			</ul>
-			<!-- <br>
-			<br> -->
 		</div>
 	</div>
 
@@ -43,14 +51,16 @@
 	<div>
 		<div class="list", align="center">
 			<ul>
-			<li>Wining hero combination: a, b</a></li>
-			<li>Wining Item: dd</a></li>
-	<!-- 		<li>Most Common Kill : 13</a></li>
-			<li>Most GPM : 11</a></li>
-			<li>Most XPM : 11</a></li> -->
+			<li>Wining hero combination: 
+				<div class='list', align='center'>
+					<ul>
+						{% for n in data %}
+		                <li>hero1: {{n[0]}}, hero2: {{n[1]}}, win rate: {{n[2]}}</li>
+		                {% endfor %}
+					</ul>
+				</div>
+			</li>
 			</ul>
-			<!-- <br>
-			<br> -->
 		</div>
 	</div>
 

@@ -181,6 +181,236 @@ def hero():
   context = dict(data = zip(names, ability))
   return render_template("hero.html", **context)
 
+@app.route('/hero/search', methods=['POST'])
+def hero_search():
+  hid = int(request.form['heroid'])
+  cursor = g.conn.execute('SELECT * FROM hero WHERE hid=cast(%s as int)', hid)
+  names = []
+  ability = []
+  for result in cursor:
+    names.append(result['hid'])  # can also be accessed using result[0]
+    ability.append(result['ability'])
+  cursor.close()
+  context = dict(data = zip(names, ability))
+  return render_template("hero.html", **context)
+
+@app.route('/item', methods=['POST', 'GET'])
+def item():
+  print (request.args)
+  cursor = g.conn.execute("SELECT * FROM item")
+  names = []
+  price = []
+  for result in cursor:
+    names.append(result['iid'])  # can also be accessed using result[0]
+    price.append(result['price'])
+  cursor.close()
+  context = dict(data = zip(names, price))
+  return render_template("item.html", **context)
+
+@app.route('/item/search', methods=['POST'])
+def item_search():
+  iid = int(request.form['iid'])
+  cursor = g.conn.execute('SELECT * FROM item WHERE iid=cast(%s as int)', iid)
+  names = []
+  price = []
+  for result in cursor:
+    names.append(result['iid'])  # can also be accessed using result[0]
+    price.append(result['price'])
+  cursor.close()
+  context = dict(data = zip(names, price))
+  return render_template("item.html", **context)
+
+@app.route('/league', methods=['POST', 'GET'])
+def league():
+  print (request.args)
+  cursor = g.conn.execute("""SELECT M.mid, P1.ptid AS team1, P2.ptid AS team2 
+                             FROM match_host M, play_in P1, play_in P2 
+                             WHERE M.mid=P1.mid and M.mid=P2.mid and P1.ptid < P2.ptid""")
+  mids = []
+  team1 = []
+  team2 = []
+  for result in cursor:
+    mids.append(result['mid'])  # can also be accessed using result[0]
+    team1.append(result['team1'])
+    team2.append(result['team2'])
+  cursor.close()
+  context = dict(data = zip(mids, team1, team2))
+  return render_template("league.html", **context)
+
+@app.route('/league/search', methods=['POST'])
+def league_search():
+  lid = int(request.form['lid'])
+  cursor = g.conn.execute("""SELECT M.mid, P1.ptid AS team1, P2.ptid AS team2 
+                             FROM match_host M, play_in P1, play_in P2 
+                             WHERE M.mid=P1.mid and M.mid=P2.mid and P1.ptid<P2.ptid and M.lid=cast(%s as int)""", lid)
+  mids = []
+  team1 = []
+  team2 = []
+  for result in cursor:
+    mids.append(result['mid'])  # can also be accessed using result[0]
+    team1.append(result['team1'])
+    team2.append(result['team2'])
+  cursor.close()
+  context = dict(data = zip(mids, team1, team2))
+  return render_template("league.html", **context)
+
+@app.route('/team', methods=['POST', 'GET'])
+def team():
+  ptid = int(request.form['ptid'])
+  cursor = g.conn.execute("""SELECT C.ptid, C.pid, C.position
+                             FROM player_consist_of C 
+                             WHERE C.ptid=cast(%s as int)""", ptid)
+  players = []
+  position = []
+  for result in cursor:
+    players.append(result['pid'])  # can also be accessed using result[0]
+    position.append(result['position'])
+  cursor.close()
+  context = dict(ptids=ptid, data = zip(players, position))
+  return render_template("team.html", **context)
+
+@app.route('/player', methods=['POST', 'GET'])
+def player():
+  print (request.args)
+  cursor = g.conn.execute("""SELECT P.pid, P.position, P.ptid
+                             FROM player_consist_of P""")
+  player = []
+  position = []
+  team = []
+  for result in cursor:
+    player.append(result['pid'])  # can also be accessed using result[0]
+    position.append(result['position'])
+    team.append(result['ptid'])
+  cursor.close()
+  context = dict(data = zip(player, position, team))
+  return render_template("player.html", **context)
+
+@app.route('/player/search', methods=['POST'])
+def player_search():
+  pid = int(request.form['pid'])
+  cursor = g.conn.execute("""SELECT P.pid, P.position, P.ptid
+                             FROM player_consist_of P
+                             WHERE P.pid=cast(%s as int)""", pid)
+  player = []
+  position = []
+  team = []
+  for result in cursor:
+    player.append(result['pid'])  # can also be accessed using result[0]
+    position.append(result['position'])
+    team.append(result['ptid'])
+  cursor.close()
+  context = dict(data = zip(player, position, team))
+  return render_template("player.html", **context)
+
+@app.route('/match', methods=['POST'])
+def match():
+  mid = int(request.form['mid'])
+  cursor1 = g.conn.execute("""SELECT B.hid, B.kill, B.assist, B.death, B.gpm, B.xpm, B.last_hit, B.denies
+                             FROM belong_to B
+                             WHERE B.mid=cast(%s as int) and B.radiant=True""", mid)
+  cursor2 = g.conn.execute("""SELECT B.hid, B.kill, B.assist, B.assist, B.death, B.gpm, B.xpm, B.last_hit, B.denies
+                             FROM belong_to B
+                             WHERE B.mid=cast(%s as int) and B.radiant=False""", mid)
+  hero1 = []
+  for result in cursor1:
+    hid = result['hid']
+    cursorItem = g.conn.execute("""SELECT O.iid
+                                   FROM own O
+                                   WHERE O.mid=cast(%s as int) and O.hid=cast(%s as int)""", mid, hid)
+    items = []
+    for item in cursorItem:
+      items.append(item['iid'])
+    hero1.append((result['hid'], items, result['kill'], result['assist'], result['death'], result['gpm'], result['xpm'], result['last_hit'], result['denies']))
+    cursorItem.close()
+  cursor1.close()
+  hero2 = []
+  for result in cursor2:
+    hid = result['hid']
+    cursorItem = g.conn.execute("""SELECT O.iid
+                                   FROM own O
+                                   WHERE O.mid=cast(%s as int) and O.hid=cast(%s as int)""", mid, hid)
+    items = []
+    for item in cursorItem:
+      items.append(item['iid'])
+    hero2.append((result['hid'], items, result['kill'], result['assist'], result['death'], result['gpm'], result['xpm'], result['last_hit'], result['denies']))
+    cursorItem.close()
+  cursor2.close()
+  context = dict(mid=mid, team1 = hero1, team2 = hero2)
+  return render_template("match.html", **context)
+
+@app.route('/summary', methods=['POST', 'GET'])
+def summary():
+  print (request.args)
+  hero = g.conn.execute("""SELECT DISTINCT B1.hid, Temp1.max
+                           FROM (SELECT MAX(Temp.total) as max
+                                 FROM (SELECT COUNT(*) as total
+                                       FROM belong_to B
+                                       GROUP BY B.hid) Temp) Temp1, belong_to B1
+                           WHERE Temp1.max=(SELECT COUNT(*) as total
+                                            FROM belong_to B2
+                                            WHERE B2.hid=B1.hid)""")
+  item = g.conn.execute("""SELECT DISTINCT O1.iid, Temp1.max
+                           FROM (SELECT MAX(Temp.total) as max
+                                 FROM (SELECT COUNT(*) as total
+                                       FROM own O
+                                       GROUP BY O.iid) Temp) Temp1, own O1
+                           WHERE Temp1.max=(SELECT COUNT(*) as total
+                                            FROM own O2
+                                            WHERE O2.iid=O1.iid)""")
+  summary = g.conn.execute("""SELECT MAX(B.kill) as kill, MAX(B.gpm) as gpm, MAX(B.xpm) as xpm
+                              FROM belong_to B""")
+  summaryhero = []
+  maxhero = []
+  for result in hero:
+    summaryhero.append(result['hid'])  # can also be accessed using result[0]
+    maxhero.append(result['max'])  # can also be accessed using result[0]
+  hero.close()
+  summaryitem = []
+  maxitem = []
+  for result in item:
+    summaryitem.append(result['iid'])  # can also be accessed using result[0]
+    maxitem.append(result['max'])  # can also be accessed using result[0]
+  item.close()
+  summarys = []
+  for result in summary:
+    summarys.append((result['kill'], result['gpm'], result['xpm']))
+  summary.close()
+  context = dict(hero = zip(summaryhero, maxhero), item = zip(summaryitem, maxitem), data = summarys)
+  return render_template("summary.html", **context)
+
+@app.route('/inference', methods=['POST', 'GET'])
+def inference():
+  print (request.args)
+  cursor = g.conn.execute("""SELECT B1.hid as hero1, B2.hid as hero2, Temp.max
+                             FROM belong_to B1, belong_to B2, (SELECT MAX(CAST(Temp1.total as FLOAT)/CAST(Temp2.total as FLOAT)) as max
+                                                               FROM (SELECT COUNT(*) as total, B3.hid as hero1, B4.hid as hero2
+                                                                     FROM belong_to B3, belong_to B4, team_compose T
+                                                                     WHERE B3.mid=B4.mid and B3.radiant=B4.radiant and B3.hid<B4.hid
+                                                                           and B3.mid=T.mid and B3.radiant=T.radiant and T.win=true
+                                                                     GROUP BY B3.hid, B4.hid) Temp1,
+                                                                     (SELECT COUNT(*) as total, B7.hid as hero1, B8.hid as hero2
+                                                                     FROM belong_to B7, belong_to B8, team_compose T3
+                                                                     WHERE B7.mid=B8.mid and B7.radiant=B8.radiant and B7.hid<B8.hid
+                                                                           and B7.mid=T3.mid and B7.radiant=T3.radiant
+                                                                     GROUP BY B7.hid, B8.hid) Temp2
+                                                               WHERE Temp1.hero1=Temp2.hero1 and Temp1.hero2=Temp2.hero2) Temp
+                             WHERE B1.mid=B2.mid and B1.radiant=B2.radiant and B1.hid<B2.hid
+                             and Temp.max=(SELECT MAX(CAST(Temp3.total as float)/CAST(Temp4.total as float))
+                                            FROM (SELECT COUNT(*) as total
+                                                  FROM belong_to B5, belong_to B6, team_compose T1
+                                                  WHERE B5.mid=B6.mid and B5.radiant=B6.radiant and B5.hid=B1.hid and B6.hid=B2.hid
+                                                  and B5.mid=T1.mid and B5.radiant=T1.radiant and T1.win=true) Temp3,
+                                                 (SELECT COUNT(*) as total
+                                                  FROM belong_to B9, belong_to B0, team_compose T2
+                                                  WHERE B9.mid=B0.mid and B9.radiant=B0.radiant and B9.hid=B1.hid and B0.hid=B2.hid
+                                                  and B9.mid=T2.mid and B9.radiant=T2.radiant) Temp4)""")
+  inference = []
+  for result in cursor:
+    inference.append((result['hero1'], result['hero2'], result['max']))
+  cursor.close()
+  context = dict(data = inference)
+  return render_template("inference.html", **context)
+
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
