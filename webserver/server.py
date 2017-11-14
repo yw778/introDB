@@ -184,6 +184,7 @@ def hero():
 @app.route('/hero/search', methods=['POST'])
 def hero_search():
   hid = int(request.form['heroid'])
+  print hid
   cursor = g.conn.execute('SELECT * FROM hero WHERE hid=cast(%s as int)', hid)
   names = []
   ability = []

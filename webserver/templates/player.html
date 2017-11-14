@@ -73,7 +73,12 @@
                 <tr id="cloneTr">  
                    <td align="center">{{n[0]}}</td>  
                    <td align="center">{{n[1]}}</td>
-                   <td align="center">{{n[2]}}</td>  
+                   <td align="center">
+                   	<form id="_form{{n[2]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[2]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form{{n[2]}}').submit();" href="#">{{n[2]}}</a>
+                   </td>  
                 </tr>  
                 {% endfor %}
              </tbody>  

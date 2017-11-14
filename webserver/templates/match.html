@@ -79,7 +79,12 @@
             <tbody>  
                 {% for n in team1 %}
                 <tr id="cloneTr">  
-                   <td align="center">{{n[0]}}</td>  
+                   <td align="center">
+                   	<form id="_form{{n[0]}}" method="POST" action="/hero/search">
+					<input type="hidden" name="heroid" value="{{n[0]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">{{n[0]}}</a>
+                   </td>
                    <td align="center">{{n[1]}}</td>  
                    <td align="center">{{n[2]}}</td>  
                    <td align="center">{{n[3]}}</td>  
@@ -114,7 +119,12 @@
             <tbody>  
                 {% for n in team2 %}
                 <tr id="cloneTr">  
-                   <td align="center">{{n[0]}}</td>  
+                   <td align="center">
+                   	<form id="_form{{n[0]}}" method="POST" action="/hero/search">
+					<input type="hidden" name="heroid" value="{{n[0]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">{{n[0]}}</a>
+                   </td>  
                    <td align="center">{{n[1]}}</td>  
                    <td align="center">{{n[2]}}</td>  
                    <td align="center">{{n[3]}}</td>  

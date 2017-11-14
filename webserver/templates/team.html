@@ -70,7 +70,12 @@
                 {% for n in data %}
                 <tr id="cloneTr">  
                    <td align="center">{{ptids}}</td>  
-                   <td align="center">{{n[0]}}</td>  
+                   <td align="center">
+                   	<form id="_form{{n[0]}}" method="POST" action="/player/search">
+					<input type="hidden" name="pid" value="{{n[0]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">{{n[0]}}</a>
+                   </td>  
                    <td align="center">{{n[1]}}</td>
                 </tr>  
                 {% endfor %}

@@ -71,9 +71,24 @@
             <tbody>
                 {% for n in data %}
                 <tr id="cloneTr">  
-                   <td align="center">{{n[0]}}</td>  
-                   <td align="center">{{n[1]}}</td>
-                   <td align="center">{{n[2]}}</td>  
+                   <td align="center">
+                   <form id="_form_match{{n[0]}}" method="POST" action="/match">
+					<input type="hidden" name="mid" value="{{n[0]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form_match{{n[0]}}').submit();" href="#">{{n[0]}}</a>
+                   </td>  
+                   <td align="center">
+                   <form id="_form_team1{{n[1]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[1]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form_team1{{n[1]}}').submit();" href="#">{{n[1]}}</a>
+                   </td>
+                   <td align="center">
+                   <form id="_form_team2{{n[2]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[2]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form_team2{{n[2]}}').submit();" href="#">{{n[2]}}</a>
+                   </td>  
                 </tr>  
                 {% endfor %}
              </tbody>  

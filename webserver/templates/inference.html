@@ -55,7 +55,16 @@
 				<div class='list', align='center'>
 					<ul>
 						{% for n in data %}
-		                <li>hero1: {{n[0]}}, hero2: {{n[1]}}, win rate: {{n[2]}}</li>
+		                <li>
+		                <form id="_form{{n[0]}}" method="POST" action="/hero/search">
+						<input type="hidden" name="heroid" value="{{n[0]}}"/> 
+						</form>
+						<form id="_form{{n[1]}}" method="POST" action="/hero/search">
+						<input type="hidden" name="heroid" value="{{n[1]}}"/> 
+						</form>
+		                hero1: <a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">{{n[0]}}</a>, hero2: 
+						<a onclick="document.getElementById('_form{{n[1]}}').submit();" href="#">{{n[1]}}</a>, win rate: {{n[2]}}
+		                </li>
 		                {% endfor %}
 					</ul>
 				</div>

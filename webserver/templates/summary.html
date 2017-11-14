@@ -51,17 +51,23 @@
 	<div>
 		<div class="list", align="center">
 			<ul>
-			<li>Most Common Hero Used : 
+			<li><h4>Most Common Hero Used:</h4>
 				{% for n in hero %}
-					hero id: {{n[0]}}, appearances: {{n[1]}};
+					<form id="_form_hero{{n[0]}}" method="POST" action="/hero/search">
+					<input type="hidden" name="heroid" value="{{n[0]}}"/> 
+					</form>
+					hero id: <a onclick="document.getElementById('_form_hero{{n[0]}}').submit();" href="#">{{n[0]}}</a>, appearances: {{n[1]}};
                 {% endfor %}</li>
-			<li>Most Common Item Used : 
+			<li><h4>Most Common Item Used:</h4>
 				{% for n in item %}
-					item id: {{n[0]}}, appearances: {{n[1]}};
+					<form id="_form_item{{n[0]}}" method="POST" action="/item/search">
+					<input type="hidden" name="iid" value="{{n[0]}}"/> 
+					</form>
+					item id: <a onclick="document.getElementById('_form_item{{n[0]}}').submit();" href="#">{{n[0]}}</a>, appearances: {{n[1]}};
                 {% endfor %}</li>
-			<li>Most Common Kill : {{data[0][0]}}</li>
-			<li>Most GPM : {{data[0][1]}}</li>
-			<li>Most XPM : {{data[0][2]}}</li>
+			<li><h4>Most Common Kill:</h4> {{data[0][0]}}</li>
+			<li><h4>Most GPM:</h4> {{data[0][1]}}</li>
+			<li><h4>Most XPM:</h4> {{data[0][2]}}</li>
 			</ul>
 			<!-- <br>
 			<br> -->
