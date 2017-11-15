@@ -62,11 +62,10 @@ create table Player_Consist_Of (
 	primary key (pid),
 	check (position > 0 and position < 6)
 );
-
+// 去掉 bought_time  感觉没啥用
 create table Own (
 	iid int not null,
 	hid int references Hero,
-	bought_time time,
 	mid int references Match_Host,
 	primary key (mid, hid, iid),
 	foreign key (iid) references Item
