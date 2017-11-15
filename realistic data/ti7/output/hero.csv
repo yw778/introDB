@@ -21,6 +21,7 @@
 21,Windranger,Ranged,"['Carry', 'Support', 'Disabler', 'Escape', 'Nuker']"
 22,Zeus,Ranged,['Nuker']
 23,Kunkka,Melee,"['Carry', 'Disabler', 'Initiator', 'Durable', 'Nuker']"
+24,Chaser,Ranged,"['Carry', 'Nuker']"
 25,Lina,Ranged,"['Support', 'Carry', 'Nuker', 'Disabler']"
 26,Lion,Ranged,"['Support', 'Disabler', 'Nuker', 'Initiator']"
 27,Shadow Shaman,Ranged,"['Support', 'Pusher', 'Disabler', 'Nuker', 'Initiator']"
