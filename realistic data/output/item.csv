@@ -1,9 +1,9 @@
-1,Town Portal Scroll,2200
-2,Observer Ward,2200
-3,Sentry Ward,2600
+1,Town Portal Scroll,100
+2,Observer Ward,50
+3,Sentry Ward,75
 4,Observer and Sentry Wards,2800
 5,Clarity,1600
-6,Iron Branch,1200
+6,Iron Branch,200
 7,Smoke of Deceit,2200
 8,Boots of Speed,600
 9,Magic Stick,600
@@ -169,34 +169,34 @@
 169,Recipe: Silver Edge,3400
 170,Silver Edge,3600
 171,Necronomicon,1400
-172,Necronomicon,2000
+172,Recipe: Necronomicon,2000
 173,Heaven's Halberd,3600
 174,Necronomicon,2200
 175,Aeon Disk,4400
-176,Heart of Tarrasque,4200
-177,Recipe: Refresher Orb,5800
-178,Recipe: Bloodthorn,5200
-179,Refresher Orb,5800
-180,Bloodthorn,5200
-181,Rod of Atos,2600
-182,Recipe: Abyssal Blade,4000
+176,Heart of Tarrasque,3200
+177,Recipe: Refresher Orb,1800
+178,Recipe: Bloodthorn,1200
+179,Refresher Orb,1800
+180,Bloodthorn,2200
+181,Rod of Atos,1600
+182,Recipe: Abyssal Blade,1000
 183,Recipe: Rod of Atos,2600
-184,Abyssal Blade,4200
-185,Dagon,4400
-186,Octarine Core,4400
-187,Boots of Travel,6200
-188,Moon Shard,5800
-189,Nullifier,4600
-190,Recipe: Crimson Guard,3600
-191,Satanic,4800
-192,Crimson Guard,3800
-193,Helm of the Dominator,1600
-194,Dagon,4200
-195,Recipe: Daedalus,4600
-196,Dagon,4600
-197,Meteor Hammer,2800
+184,Abyssal Blade,2200
+185,Dagon,2300
+186,Octarine Core,2400
+187,Boots of Travel,2000
+188,Moon Shard,3800
+189,Nullifier,3600
+190,Recipe: Crimson Guard,1600
+191,Satanic,3800
+192,Crimson Guard,2800
+193,Helm of the Dominator,2600
+194,Recipe: Dagon,3200
+195,Recipe: Daedalus,1000
+196,Dagon,4400
+197,Meteor Hammer,4500
 198,Daedalus,4800
 199,Dagon,4800
-200,Animal Courier,100
+200,Animal Courier,5100
 201,Divine Rapier,5800
-202,Ethereal Blade,4200
+202,Ethereal Blade,5200

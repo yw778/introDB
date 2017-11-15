@@ -88,10 +88,12 @@ create table Belong_To (
 	check (level > 0 and level < 26)
 );
 // 去掉了 rank 和 win_rate 这两个应该是算出来的
+// add rank
 create table Participate (
 	lid int references League,
 	ptid int references Pro_Team,
-	primary key (lid, ptid),
+	rank int,
+	primary key (lid, ptid)
 );
 
 create table Match_Host (
