@@ -58,10 +58,11 @@
 	</div>
 
 	<div align="center">   
-	   	<table id="generatedTable" style ="border=2">  
+	   	<table id="generatedTable" border="1">  
             <thead>  
                 <tr align="center">  
-                    <th style='width:20%;'>Item Id</th>  
+                    <th style='width:20%;'>Item Id</th> 
+                    <th style='width:20%;'>Name</th>    
                     <th style='width:20%;'>Price</th>  
                 <!--     <th style='width:10%;'>第四列</th>                               
                     <th style='width:3%;'>第五列</th>      -->                       
@@ -71,7 +72,8 @@
                 {% for n in data %}
                 <tr id="cloneTr">  
                    <td align="center">{{n[0]}}</td>  
-                   <td align="center">{{n[1]}}</td>
+                   <td align="center">{{n[1]}}</td>  
+                   <td align="center">{{n[2]}}</td>
                 </tr>  
                 {% endfor %}
              </tbody>  
@@ -106,8 +108,8 @@
 	        for(var int=0;int<inputArrayLength;int++){
 	            //判断每个input元素的值是否为空
 	            if( inputArray[int].value==null || inputArray[int].value=='' 
-	            		|| inputArray[int].value < 1 || inputArray[int].value > 20){
-	                alert('Pleas Input number from 1 to 20');
+	            		|| inputArray[int].value < 1 || inputArray[int].value > 202){
+	                alert('Pleas Input number from 1 to 202');
 	                return false;
 	            }
 	        }

@@ -53,26 +53,63 @@
 			<ul>
 			<li><h4>Most Common Hero Used:</h4>
 				{% for n in hero %}
-					<form id="_form_hero{{n[0]}}" method="POST" action="/hero/search">
-					<input type="hidden" name="heroid" value="{{n[0]}}"/> 
+					<form id="_form_hero{{n[0][0]}}" method="POST" action="/hero/search">
+					<input type="hidden" name="heroid" value="{{n[0][0]}}"/> 
 					</form>
-					hero id: <a onclick="document.getElementById('_form_hero{{n[0]}}').submit();" href="#">{{n[0]}}</a>, appearances: {{n[1]}};
+					Hero: <a onclick="document.getElementById('_form_hero{{n[0][0]}}').submit();" href="#">{{n[0][1]}}</a>, appearances: {{n[1]}};
                 {% endfor %}</li>
-			<li><h4>Most Common Item Used:</h4>
+			<!-- <li><h4>Most Common Item Used:</h4>
 				{% for n in item %}
 					<form id="_form_item{{n[0]}}" method="POST" action="/item/search">
 					<input type="hidden" name="iid" value="{{n[0]}}"/> 
 					</form>
 					item id: <a onclick="document.getElementById('_form_item{{n[0]}}').submit();" href="#">{{n[0]}}</a>, appearances: {{n[1]}};
-                {% endfor %}</li>
-			<li><h4>Most Common Kill:</h4> {{data[0][0]}}</li>
-			<li><h4>Most GPM:</h4> {{data[0][1]}}</li>
-			<li><h4>Most XPM:</h4> {{data[0][2]}}</li>
+                {% endfor %}</li> -->
+            <li><br></br></li>
+			<li><B>Most Kill:</B> {{data[0][0]}}</li>
+			<li><B>Most GPM:</B> {{data[0][1]}}</li>
+			<li><B>Most XPM:</B> {{data[0][2]}}</li>
 			</ul>
 			<!-- <br>
 			<br> -->
 		</div>
 	</div>
+
+	<div align="center">
+	   	<table id="generatedTable" border="1">  
+            <thead>  
+                <tr align="center">  
+                    <th style='width:20%;'>League</th>   
+                    <th style='width:20%;'>Champion</th>  
+                    <th style='width:20%;'>Runner Up</th>               
+                </tr align="center">  
+            </thead>  
+            <tbody>  
+                {% for n in rank %}
+                <tr id="cloneTr">  
+                   <td align="center">
+                   	<form id="_form{{n[0]}}" method="POST" action="/league/search">
+					<input type="hidden" name="lid" value="{{n[0]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">The International {{n[0]}}</a>
+                   </td>
+                   <td align="center">
+                   	<form id="_form_team{{n[1]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[1]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form_team{{n[1]}}').submit();" href="#">{{n[2]}}</a>
+                   </td>
+                   <td align="center">
+                   	<form id="_form_team{{n[3]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[3]}}"/> 
+					</form>
+					<a onclick="document.getElementById('_form_team{{n[3]}}').submit();" href="#">{{n[4]}}</a>
+                   </td>
+                </tr>  
+                {% endfor %}
+             </tbody>  
+ 		</table>  
+	</div> 
 
 	
 	

@@ -51,14 +51,14 @@
 	<div class="title",>
 		<h2 align="center">
 		<form action="/league/search" onsubmit="return verify();" method="POST"  id="form">
-			Ti Number(1 - 7): <input type="text" name="lid" value="1"/><br/>
+			Ti Number(2 - 7): <input type="text" name="lid" value="2"/><br/>
 			<input type="submit" value="Search"/>
 		</form>
 		</h2>
 	</div>
 
 	<div align="center">   
-	   	<table id="generatedTable" style ="border=2">  
+	   	<table id="generatedTable" border="1">  
             <thead>  
                 <tr align="center">  
                     <th style='width:20%;'>Match Id</th>  
@@ -78,16 +78,16 @@
 					<a onclick="document.getElementById('_form_match{{n[0]}}').submit();" href="#">{{n[0]}}</a>
                    </td>  
                    <td align="center">
-                   <form id="_form_team1{{n[1]}}" method="POST" action="/team">
-					<input type="hidden" name="ptid" value="{{n[1]}}"/> 
+                   <form id="_form_team1{{n[1][0]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[1][0]}}"/> 
 					</form>
-					<a onclick="document.getElementById('_form_team1{{n[1]}}').submit();" href="#">{{n[1]}}</a>
+					<a onclick="document.getElementById('_form_team1{{n[1][0]}}').submit();" href="#">{{n[1][1]}}</a>
                    </td>
                    <td align="center">
-                   <form id="_form_team2{{n[2]}}" method="POST" action="/team">
-					<input type="hidden" name="ptid" value="{{n[2]}}"/> 
+                   <form id="_form_team2{{n[2][0]}}" method="POST" action="/team">
+					<input type="hidden" name="ptid" value="{{n[2][0]}}"/> 
 					</form>
-					<a onclick="document.getElementById('_form_team2{{n[2]}}').submit();" href="#">{{n[2]}}</a>
+					<a onclick="document.getElementById('_form_team2{{n[2][0]}}').submit();" href="#">{{n[2][1]}}</a>
                    </td>  
                 </tr>  
                 {% endfor %}
@@ -123,8 +123,8 @@
 	        for(var int=0;int<inputArrayLength;int++){
 	            //判断每个input元素的值是否为空
 	            if( inputArray[int].value==null || inputArray[int].value=='' 
-	            		|| inputArray[int].value < 1 || inputArray[int].value > 3){
-	                alert('Pleas Input number from 1 to 7');
+	            		|| inputArray[int].value < 2 || inputArray[int].value > 7){
+	                alert('Pleas Input number from 2 to 7');
 	                return false;
 	            }
 	        }

@@ -57,26 +57,32 @@
 		</h2>
 	</div>
 
+	<h3 align='center'>{{ptname}}</h3>
+
 	<div align="center">   
-	   	<table id="generatedTable" style ="border=2">  
+	   	<table id="generatedTable" border="1">  
             <thead>  
                 <tr align="center">  
-                    <th style='width:20%;'>Team Id</th>  
-                    <th style='width:20%;'>Player</th>  
+                    <!-- <th style='width:20%;'>Team Id</th>  
+                    <th style='width:20%;'>Team Name</th> -->    
+                    <th style='width:20%;'>Player</th>   
+                    <!-- <th style='width:20%;'>Player Name</th>  -->
                     <th style='width:20%;'>Position</th>                     
                 </tr align="center">  
             </thead>  
             <tbody>
                 {% for n in data %}
                 <tr id="cloneTr">  
-                   <td align="center">{{ptids}}</td>  
+                   <!-- <td align="center">{{ptids}}</td>  
+                   <td align="center">{{ptname}}</td> -->
                    <td align="center">
                    	<form id="_form{{n[0]}}" method="POST" action="/player/search">
 					<input type="hidden" name="pid" value="{{n[0]}}"/> 
 					</form>
-					<a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">{{n[0]}}</a>
+					<a onclick="document.getElementById('_form{{n[0]}}').submit();" href="#">{{n[1]}}</a>
                    </td>  
-                   <td align="center">{{n[1]}}</td>
+                   <!-- <td align="center">{{n[1]}}</td> -->
+                   <td align="center">{{n[2]}}</td>
                 </tr>  
                 {% endfor %}
             </tbody>  
@@ -111,8 +117,8 @@
 	        for(var int=0;int<inputArrayLength;int++){
 	            //判断每个input元素的值是否为空
 	            if( inputArray[int].value==null || inputArray[int].value=='' 
-	            		|| inputArray[int].value < 1 || inputArray[int].value > 7){
-	                alert('Pleas Input number from 1 to 7');
+	            		|| inputArray[int].value < 1 || inputArray[int].value > 16){
+	                alert('Pleas Input number from 1 to 16');
 	                return false;
 	            }
 	        }

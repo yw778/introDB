@@ -58,18 +58,22 @@
 	</div>
 
 	<div align="center">   
-      <table id="generatedTable" style ="border=2">  
+      <table id="generatedTable" border="1">  
             <thead>  
                 <tr align="center">  
                     <th style='width:20%;'>Hero Id</th>  
-                    <th style='width:20%;'>Ability</th>                
+                    <th style='width:20%;'>Name</th>   
+                    <th style='width:20%;'>Attack Type</th>     
+                    <th style='width:20%;'>Role</th>                  
                 </tr align="center">  
             </thead>  
             <tbody>
                 {% for n in data %}
                 <tr id="cloneTr">  
                    <td align="center">{{n[0]}}</td>  
-                   <td align="center">{{n[1]}}</td>
+                   <td align="center">{{n[1]}}</td>  
+                   <td align="center">{{n[2]}}</td>  
+                   <td align="center">{{n[3]}}</td>
                 </tr>  
                 {% endfor %}
              </tbody>
@@ -104,8 +108,8 @@
 	        for(var int=0;int<inputArrayLength;int++){
 	            //判断每个input元素的值是否为空
 	            if( inputArray[int].value==null || inputArray[int].value=='' 
-	            		|| inputArray[int].value < 1 || inputArray[int].value > 20){
-	                alert('Pleas Input number from 1 to 20');
+	            		|| inputArray[int].value < 1 || inputArray[int].value > 120){
+	                alert('Pleas Input number from 1 to 120');
 	                return false;
 	            }
 	        }
