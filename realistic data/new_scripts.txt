@@ -1,0 +1,105 @@
+create table League (
+	lid int,
+	prize_pool int,
+	primary key (lid)
+);
+
+//加上了 iname
+create table Item (
+	iid int,
+	iname varchar(100),
+	price int,
+	primary key (iid)
+);
+// 去掉了 ability 加上了 hname, attack_type(近战远程), roles([heal,carry,support]) 
+create table Hero (
+	hid int,
+	hname varchar(100),
+	attack_type varchar(100),
+	roles varchar(100),
+	primary key(hid)
+);
+// Pro_Team 里面加了 ptname
+create table Pro_Team (
+	ptid int,
+	ptname varchar(100),
+	primary key(ptid)
+);
+
+
+create table Team_Compose (
+	mid int references Match_Host,
+	radiant boolean,
+	fb boolean,
+	win boolean,
+	tower int,
+	primary key (mid, radiant)
+);
+
+create table Play_In (
+	mid int,
+	radiant boolean,
+	ptid int references Pro_Team (ptid),
+	primary key (mid, ptid),
+	foreign key (mid, radiant) references Team_Compose
+);
+
+create table Pick (
+	pid int references Player_Consist_Of (pid),
+	hid int references Hero (hid),
+	mid int not null,
+	primary key (pid, mid),
+	unique (mid, hid),
+	foreign key (mid) references Match_Host
+);
+// Player_Consist_Of里面去掉了 hero_used 加上了 pname
+create table Player_Consist_Of (
+	pid int,
+	pname varchar(100),
+	position int,
+	ptid int not null,
+	foreign key (ptid) references Pro_Team (ptid),
+	primary key (pid),
+	check (position > 0 and position < 6)
+);
+
+create table Own (
+	iid int not null,
+	hid int references Hero,
+	bought_time time,
+	mid int references Match_Host,
+	primary key (mid, hid, iid),
+	foreign key (iid) references Item
+);
+
+create table Belong_To (
+	mid int,
+	radiant boolean,
+	hid int references Hero,
+	last_hit int,
+	death int,
+	kill int,
+	level int,
+	denies int,
+	gpm int,
+	assist int,
+	xpm int,
+	primary key(mid, radiant, hid),
+	foreign key (mid, radiant) references Team_Compose,
+	check (level > 0 and level < 26)
+);
+// 去掉了 rank 和 win_rate 这两个应该是算出来的
+create table Participate (
+	lid int references League,
+	ptid int references Pro_Team,
+	primary key (lid, ptid),
+);
+
+create table Match_Host (
+	mid int,
+	lid int not null,
+	date date,
+	duration time,
+	primary key (mid),
+	foreign key (lid)  references League 
+);
