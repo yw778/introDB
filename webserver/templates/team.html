@@ -57,7 +57,7 @@
 		</h2>
 	</div>
 
-	<h3 align='center'>{{ptname}}</h3>
+	<h3 align='center'>{{ptname}}: {{winrate[0]}}</h3>
 
 	<div align="center">   
 	   	<table id="generatedTable" border="1">  
@@ -114,9 +114,9 @@
 	        var inputArray=form.getElementsByTagName("input");
 	        var inputArrayLength=inputArray.length;
 	        //循环input元素数组
-	        for(var int=0;int<inputArrayLength;int++){
+	        for(var int=0;int<1;int++){
 	            //判断每个input元素的值是否为空
-	            if( inputArray[int].value==null || inputArray[int].value=='' 
+	            if( !($.isNumeric(inputArray[int].value)) ||inputArray[int].value==null || inputArray[int].value=='' 
 	            		|| inputArray[int].value < 1 || inputArray[int].value > 16){
 	                alert('Pleas Input number from 1 to 16');
 	                return false;

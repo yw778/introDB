@@ -96,73 +96,74 @@ def teardown_request(exception):
 #
 @app.route('/')
 def index():
-  """
-  request is a special object that Flask provides to access web request information:
+  return redirect('/league')
+#   """
+#   request is a special object that Flask provides to access web request information:
 
-  request.method:   "GET" or "POST"
-  request.form:     if the browser submitted a form, this contains the data in the form
-  request.args:     dictionary of URL arguments, e.g., {a:1, b:2} for http://localhost?a=1&b=2
+#   request.method:   "GET" or "POST"
+#   request.form:     if the browser submitted a form, this contains the data in the form
+#   request.args:     dictionary of URL arguments, e.g., {a:1, b:2} for http://localhost?a=1&b=2
 
-  See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
-  """
+#   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
+#   """
 
-  # DEBUG: this is debugging code to see what request looks like
-  print (request.args)
-
-
-  #
-  # example of a database query
-  #
-  cursor = g.conn.execute("SELECT * FROM hero")
-  names = []
-  ability = []
-  for result in cursor:
-    names.append(result['hid'])  # can also be accessed using result[0]
-    ability.append(result['hname'])
-  cursor.close()
-
-  #
-  # Flask uses Jinja templates, which is an extension to HTML where you can
-  # pass data to a template and dynamically generate HTML based on the data
-  # (you can think of it as simple PHP)
-  # documentation: https://realpython.com/blog/python/primer-on-jinja-templating/
-  #
-  # You can see an example template in templates/index.html
-  #
-  # context are the variables that are passed to the template.
-  # for example, "data" key in the context variable defined below will be 
-  # accessible as a variable in index.html:
-  #
-  #     # will print: [u'grace hopper', u'alan turing', u'ada lovelace']
-  #     <div>{{data}}</div>
-  #     
-  #     # creates a <div> tag for each element in data
-  #     # will print: 
-  #     #
-  #     #   <div>grace hopper</div>
-  #     #   <div>alan turing</div>
-  #     #   <div>ada lovelace</div>
-  #     #
-  #     {% for n in data %}
-  #     <div>{{n}}</div>
-  #     {% endfor %}
-  #
-  context = dict(data = zip(names, ability))
+#   # DEBUG: this is debugging code to see what request looks like
+#   print (request.args)
 
 
-  #
-  # render_template looks in the templates/ folder for files.
-  # for example, the below file reads template/index.html
-  #
-  return render_template("index.html", **context)
+#   #
+#   # example of a database query
+#   #
+#   cursor = g.conn.execute("SELECT * FROM hero")
+#   names = []
+#   ability = []
+#   for result in cursor:
+#     names.append(result['hid'])  # can also be accessed using result[0]
+#     ability.append(result['hname'])
+#   cursor.close()
 
-#
-# This is an example of a different path.  You can see it at:
-# 
-#     localhost:8111/another
-#
-# Notice that the function name is another() rather than index()
-# The functions for each app.route need to have different names
+#   #
+#   # Flask uses Jinja templates, which is an extension to HTML where you can
+#   # pass data to a template and dynamically generate HTML based on the data
+#   # (you can think of it as simple PHP)
+#   # documentation: https://realpython.com/blog/python/primer-on-jinja-templating/
+#   #
+#   # You can see an example template in templates/index.html
+#   #
+#   # context are the variables that are passed to the template.
+#   # for example, "data" key in the context variable defined below will be 
+#   # accessible as a variable in index.html:
+#   #
+#   #     # will print: [u'grace hopper', u'alan turing', u'ada lovelace']
+#   #     <div>{{data}}</div>
+#   #     
+#   #     # creates a <div> tag for each element in data
+#   #     # will print: 
+#   #     #
+#   #     #   <div>grace hopper</div>
+#   #     #   <div>alan turing</div>
+#   #     #   <div>ada lovelace</div>
+#   #     #
+#   #     {% for n in data %}
+#   #     <div>{{n}}</div>
+#   #     {% endfor %}
+#   #
+#   context = dict(data = zip(names, ability))
+
+
+#   #
+#   # render_template looks in the templates/ folder for files.
+#   # for example, the below file reads template/index.html
+#   #
+#   return render_template("index.html", **context)
+
+# #
+# # This is an example of a different path.  You can see it at:
+# # 
+# #     localhost:8111/another
+# #
+# # Notice that the function name is another() rather than index()
+# # The functions for each app.route need to have different names
 #
 @app.route('/another')
 def another():
@@ -220,7 +221,7 @@ def item():
 
 @app.route('/item/search', methods=['POST'])
 def item_search():
-  print request.form['iid']
+  print (request.form['iid'])
   iid = int(request.form['iid'])
   cursor = g.conn.execute('SELECT * FROM item WHERE iid=cast(%s as int)', iid)
   names = []
@@ -277,13 +278,25 @@ def team():
   players = []
   pnames = []
   position = []
+  win = []
+
+  winrate = g.conn.execute("""SELECT CAST(CAST(Temp1.win AS float)/CAST(Temp2.total AS float) AS numeric(18, 2)) as winrate
+                              FROM (SELECT COUNT(*) as win
+                                    FROM play_in P, team_compose T
+                                    WHERE P.ptid=cast(%s as int) and P.mid=T.mid and P.radiant=T.radiant and T.win=true) Temp1,
+                                   (SELECT COUNT(*) as total
+                                    FROM play_in P, team_compose T
+                                    WHERE P.ptid=cast(%s as int) and P.mid=T.mid and P.radiant=T.radiant) Temp2""", ptid, ptid)
+  for w in winrate:
+    win.append(w['winrate'])
+  winrate.close()
   for result in cursor:
     players.append(result['pid'])  # can also be accessed using result[0]
     position.append(result['position'])
     pnames.append(result['pname'])
     ptname = result['ptname']
   cursor.close()
-  context = dict(ptids=ptid, data = zip(players, pnames, position), ptname=ptname)
+  context = dict(ptids=ptid, data = zip(players, pnames, position), ptname=ptname, winrate=win)
   return render_template("team.html", **context)
 
 @app.route('/player', methods=['POST', 'GET'])
@@ -338,6 +351,7 @@ def match():
   cursor2 = g.conn.execute("""SELECT B.hid, H.hname, B.kill, B.assist, B.assist, B.death, B.gpm, B.xpm, B.last_hit, B.denies
                              FROM belong_to B, hero H
                              WHERE B.hid=H.hid and B.mid=cast(%s as int) and B.radiant=False""", mid)
+  cursor3 = g.conn.execute("""SELECT pt.ptname, pt.ptid from Play_In p natural join Pro_team pt where p.mid = cast(%s as int)""", mid)
   hero1 = []
   for result in cursor1:
     hid = result['hid']
@@ -362,7 +376,11 @@ def match():
     hero2.append((result['hid'], result['hname'], items, result['kill'], result['assist'], result['death'], result['gpm'], result['xpm'], result['last_hit'], result['denies']))
     cursorItem.close()
   cursor2.close()
-  context = dict(mid=mid, team1 = hero1, team2 = hero2)
+  team = []
+  for result in cursor3:
+    team.append(result);
+  context = dict(mid=mid, team1 = hero1, team2 = hero2, team=team)
+  print(team)
   return render_template("match.html", **context)
 
 @app.route('/summary', methods=['POST', 'GET'])
